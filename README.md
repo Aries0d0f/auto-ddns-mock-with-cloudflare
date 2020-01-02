@@ -139,6 +139,26 @@ From: YOUR_EMAIL@example.com
 ...
 ```
 
+Finally, enable the options in the `runtime.sh`, change it from
+
+```sh
+  3 # [GLOBAL]
+  4 VERSION="v1.0.0";
+  5 AUTHOR="@Aries0d0f";
+  6 SEND_MAIL="false";
+  7 # SEND_MAIL="true";
+```
+
+into
+
+```sh
+  3 # [GLOBAL]
+  4 VERSION="v1.0.0";
+  5 AUTHOR="@Aries0d0f";
+  6 # SEND_MAIL="false";
+  7 SEND_MAIL="true";
+```
+
 ## References
 
 - [Cloudflare API Documents](https://api.cloudflare.com/)

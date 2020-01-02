@@ -1,3 +1,4 @@
 cron_exec.sh
 log/*
 .DS_Store
+.mail.tmp

@@ -1,8 +1,12 @@
 #!/bin/sh
 
-cat $(pwd)/mail.template > .mail.tmp
-cat log/$(ls -lah $(pwd)/log | tail -n 1 | awk '{print $9}') >> $(pwd)/.mail.tmp
-echo "</pre>" >> $(pwd)/.mail.tmp
-ssmtp YOUR_EMAIL@example.com < $(pwd)/.mail.tmp
+BASE=$(dirname "$0")
+sleep 10;
 
-#rm $(pwd)/.mail.tmp
+cat $BASE/mail.template > $BASE/.mail.tmp;
+cat $BASE/log/$(ls -lah "$BASE/log" | tail -n 1 | awk '{print $9}') >> $BASE/.mail.tmp;
+echo "</pre>" >> $BASE/.mail.tmp;
+
+ssmtp YOUR_EMAIL@example.com < $BASE/.mail.tmp;
+
+rm $(pwd)/.mail.tmp;

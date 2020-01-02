@@ -48,19 +48,19 @@ echo "Sending Request...";
 sleep 2;
 if [ "$NEW_IPv4" = "$CURRENT_IP" ]
 then
-	echo "No Change in IP Adddress, exit."
-	else
-		curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$IPv4_RECORD_ID" \
-			-H "X-Auth-Email: $X_AUTH_EMAIL" \
-			-H "X-Auth-Key: $X_AUTH_KEY" \
-			-H "Content-Type: application/json" \
-			--data '{"type":"'$IPv4_RECORD_TYPE'","name":"'$IPv4_DOMAIN_NAME'","content":"'$NEW_IPv4'","ttl":'$IPv4_TTL',"proxied":'$IPv4_CDN_PROXY'}' > /dev/null;
-
-		curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$IPv4_RECORD_ID" \
-			                        -H "X-Auth-Email: $X_AUTH_EMAIL" \
-						                        -H "X-Auth-Key: $X_AUTH_KEY" \
-									                        -H "Content-Type: application/json" \
-												                        --data '{"type":"'$IPv6_RECORD_TYPE'","name":"'$IPv6_DOMAIN_NAME'","content":"'$NEW_IPv6'","ttl":'$IPv6_TTL',"proxied":'$IPv6_CDN_PROXY'}' > /dev/null;
-		echo $NEW_IPv4 > $CURRENT_IP_PATH;
-		echo "Update successful.";
-	fi
+    echo "No Change in IP Adddress, exit."
+else
+    curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$IPv4_RECORD_ID" \
+    -H "X-Auth-Email: $X_AUTH_EMAIL" \
+    -H "X-Auth-Key: $X_AUTH_KEY" \
+    -H "Content-Type: application/json" \
+    --data '{"type":"'$IPv4_RECORD_TYPE'","name":"'$IPv4_DOMAIN_NAME'","content":"'$NEW_IPv4'","ttl":'$IPv4_TTL',"proxied":'$IPv4_CDN_PROXY'}' > /dev/null;
+    
+    curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$IPv4_RECORD_ID" \
+    -H "X-Auth-Email: $X_AUTH_EMAIL" \
+    -H "X-Auth-Key: $X_AUTH_KEY" \
+    -H "Content-Type: application/json" \
+    --data '{"type":"'$IPv6_RECORD_TYPE'","name":"'$IPv6_DOMAIN_NAME'","content":"'$NEW_IPv6'","ttl":'$IPv6_TTL',"proxied":'$IPv6_CDN_PROXY'}' > /dev/null;
+    echo $NEW_IPv4 > $CURRENT_IP_PATH;
+    echo "Update successful.";
+fi

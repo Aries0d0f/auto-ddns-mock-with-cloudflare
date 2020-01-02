@@ -2,12 +2,12 @@
 
 This is a simple shell script project that turn your Cloudflare into free DDNS.
 
-## Requirement
+## Requirements
 
 - A registered domain name
 - A Cloudflare account (free plan is supported)
-- A(n) Linux/Unix environment (**ATTENTION: WSL/macOS hasn't been tested about the platform compatibility.**)
-- A power on machine with internet connection 24 hours 365 days every year.
+- A(n) Linux/Unix environment (**ATTENTION: WSL/macOS hasn't been tested about the platform compatibility**)
+- An always power on computer with internet connection.
 - Public accessable IP Address
 
 ## Recommended

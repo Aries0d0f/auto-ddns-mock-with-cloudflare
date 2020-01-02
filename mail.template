@@ -1,0 +1,12 @@
+To: YOUR_EMAIL@example.com
+From: YOUR_EMAIL@example.com
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Subject: [DDNS] IP address update notification
+
+<p>
+  This mail is auto sended by <a href="https://github.com/Aries0d0f/auto-ddns-mock-with-cloudflare">Auto DDNS Mock with Cloudflare</a> project,<br>
+  made by <a href="https://aries0d0f.me">@Aries0d0f</a>
+</p>
+<pre>
+RAW log:

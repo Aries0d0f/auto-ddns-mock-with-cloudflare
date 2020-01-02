@@ -1,7 +1,10 @@
 #!/bin/sh
 
+# [GLOBAL]
 VERSION="v1.0.0";
 AUTHOR="@Aries0d0f";
+SEND_MAIL="false";
+# SEND_MAIL="true";
 
 # [Cloudflare API Args]
 ZONE_ID="YOUR_CLOUDFLARE_ZONE_ID";
@@ -63,4 +66,9 @@ else
     --data '{"type":"'$IPv6_RECORD_TYPE'","name":"'$IPv6_DOMAIN_NAME'","content":"'$NEW_IPv6'","ttl":'$IPv6_TTL',"proxied":'$IPv6_CDN_PROXY'}' > /dev/null;
     echo $NEW_IPv4 > $CURRENT_IP_PATH;
     echo "Update successful.";
+    if [ "$SEND_MAIL" = "true" ]
+    then
+        sleep 5;
+        $(pwd)/sendmail.sh;
+    fi
 fi

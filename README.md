@@ -38,10 +38,10 @@ cd path/to/ddns
 
 
 ```sh
-  6 # [Cloudflare API Args]
-  7 ZONE_ID="YOUR_CLOUDFLARE_ZONE_ID";
-  8 X_AUTH_EMAIL="YOUR_CLOUDFLARE_AUTH_EMAIL";
-  9 X_AUTH_KEY="YOUR_CLOUDFLARE_AUTH_KEY";
+  9 # [Cloudflare API Args]
+ 10 ZONE_ID="YOUR_CLOUDFLARE_ZONE_ID";
+ 11 X_AUTH_EMAIL="YOUR_CLOUDFLARE_AUTH_EMAIL";
+ 12 X_AUTH_KEY="YOUR_CLOUDFLARE_AUTH_KEY";
 ```
 
 **`IPv4 DNS Record`**
@@ -49,23 +49,23 @@ cd path/to/ddns
 - [How to find the DNS Record ID](#how-to-find-the-dns-record-id)
 
 ```sh
- 19 # [DNS IPv4 Record Args]
- 20 IPv4_RECORD_ID="YOUR_CLOUDFLARE_DNS_RECORD_ID";
- 21 IPv4_RECORD_TYPE="A";
- 22 IPv4_DOMAIN_NAME="srv1.example.com";
- 23 IPv4_TTL="120";
- 24 IPv4_CDN_PROXY="false"
+ 22 # [DNS IPv4 Record Args]
+ 23 IPv4_RECORD_ID="YOUR_CLOUDFLARE_DNS_RECORD_ID";
+ 24 IPv4_RECORD_TYPE="A";
+ 25 IPv4_DOMAIN_NAME="srv1.example.com";
+ 26 IPv4_TTL="120";
+ 27 IPv4_CDN_PROXY="false"
 ```
 
 **`IPv6 DNS Record`**
 
 ```sh
- 26 # [DNS IPv6 Record Args]
- 27 IPv6_RECORD_ID="YOUR_CLOUDFLARE_DNS_RECORD_ID";
- 28 IPv6_RECORD_TYPE="AAAA";
- 29 IPv6_DOMAIN_NAME="srv1.example.com";
- 30 IPv6_TTL="120";
- 31 IPv6_CDN_PROXY="false"
+ 29 # [DNS IPv6 Record Args]
+ 30 IPv6_RECORD_ID="YOUR_CLOUDFLARE_DNS_RECORD_ID";
+ 31 IPv6_RECORD_TYPE="AAAA";
+ 32 IPv6_DOMAIN_NAME="srv1.example.com";
+ 33 IPv6_TTL="120";
+ 34 IPv6_CDN_PROXY="false"
 ```
 
 4. Run the `setup.sh`:
@@ -120,6 +120,23 @@ If the data was correct it must return a JSON format content like this:
   "errors": [],
   "messages": []
 }
+```
+
+## Mail Notification
+
+If you want to got a notification when DDNS Record been update, you need to setup **`ssmtp`** on your platform first.
+Also, you need to customize your email address in `sendmail.sh`:
+
+```sh
+  6 ssmtp YOUR_EMAIL@example.com < $(pwd)/.mail.tmp
+```
+
+and `mail.template`:
+
+```
+To: YOUR_EMAIL@example.com
+From: YOUR_EMAIL@example.com
+...
 ```
 
 ## References

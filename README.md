@@ -74,6 +74,8 @@ cd path/to/ddns
 ./setup.sh
 ```
 
+**`ATTENTION`** If you want to enable the Email Notofication (experimental), jump to the [Email Notification](#email-notification) part and setup follow the guide first.
+
 5. Enjoy!
 
 ## How to find the DNS Record ID
@@ -111,7 +113,7 @@ If the data was correct it must return a JSON format content like this:
         "managed_by_argo_tunnel": false
       }
     },
-    ...,
+    ...
   ],
   "result_info": {
     ...
@@ -122,24 +124,24 @@ If the data was correct it must return a JSON format content like this:
 }
 ```
 
-## Mail Notification
+## Email Notification (Experimental)
 
-If you want to got a notification when DDNS Record been update, you need to setup **`ssmtp`** on your platform first.
+If you want to got a notification when DDNS Record been update, you need to install and setup **`ssmtp`**, **`openssh`** on your platform first, recommanded and default to use ssh public key for authentication.
 Also, you need to customize your email address in `sendmail.sh`:
 
 ```sh
-  6 ssmtp YOUR_EMAIL@example.com < $(pwd)/.mail.tmp
+ 10 ssmtp YOUR_EMAIL@example.com < $BASE/.mail.tmp;
 ```
 
 and `mail.template`:
 
-```
+```text
 To: YOUR_EMAIL@example.com
 From: YOUR_EMAIL@example.com
 ...
 ```
 
-Finally, enable the options in the `runtime.sh`, change it from
+Then enable the options in the `runtime.sh`, modify it from
 
 ```sh
   3 # [GLOBAL]
@@ -149,7 +151,7 @@ Finally, enable the options in the `runtime.sh`, change it from
   7 # SEND_MAIL="true";
 ```
 
-into
+to
 
 ```sh
   3 # [GLOBAL]
@@ -158,6 +160,22 @@ into
   6 # SEND_MAIL="false";
   7 SEND_MAIL="true";
 ```
+
+Finally, modify the build script `build.sh`, modify it from
+
+```sh
+  7 echo "*/2 * * * * $(pwd)/cron_exec.sh" >> .cron.tmp
+  8 # echo "*/2 * * * * ssh $(whoami)@localhost 'cd $(pwd) && $(pwd)/cron_exec.sh'" >> .cron.tmp
+```
+
+to
+
+```sh
+  7 # echo "*/2 * * * * $(pwd)/cron_exec.sh" >> .cron.tmp
+  8 echo "*/2 * * * * ssh $(whoami)@localhost 'cd $(pwd) && $(pwd)/cron_exec.sh'" >> .cron.tmp
+```
+
+**`ATTENTION`** If you had already executed the `setup.sh` before you config the mail feature, you need to manually remove the old injected cron job and run `setup.sh` again.
 
 ## References
 

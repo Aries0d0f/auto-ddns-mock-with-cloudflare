@@ -29,7 +29,7 @@ git clone https://github.com/Aries0d0f/auto-ddns-mock-with-cloudflare.git ddns
 cd path/to/ddns
 ```
 
-3. All config arguments is in the `runtime.sh`, and you should set them up first:
+3. All config arguments are in the `runtime.sh`, and you should set them up first:
 
 **`API setup`**
 

@@ -14,8 +14,11 @@ X_AUTH_KEY="YOUR_CLOUDFLARE_AUTH_KEY";
 # [Local Environment Args]
 ENV_PATH="$(pwd)";
 LOG_PATH="$ENV_PATH/log";
-CURRENT_IP_PATH="$LOG_PATH/current_ip.log";
-CURRENT_IP=`cat "$CURRENT_IP_PATH"`;
+CURRENT_IPv4_PATH="$LOG_PATH/current_ipv4.log";
+CURRENT_IPv6_PATH="$LOG_PATH/current_ipv6.log";
+CURRENT_IPv4=`cat "$CURRENT_IPv4_PATH"`;
+CURRENT_IPv6=`cat "$CURRENT_IPv6_PATH"`;
+
 NEW_IPv4=`curl -s http://ipv4.icanhazip.com`;
 NEW_IPv6=`curl -s http://ipv6.icanhazip.com`;
 
@@ -38,18 +41,25 @@ echo "[Auto DDNS mocking with Cloudflare]";
 echo "Version:              $VERSION by $AUTHOR";
 echo "Environment Path:     $ENV_PATH";
 echo "Log Path:             $LOG_PATH";
+echo "========================================";
 sleep 1;
-echo "Current IP Recoard:   $CURRENT_IP";
-echo "Fetching IP...\rNow IP Address:       $NEW_IPv4";
+echo "Present IPv4 Address:   $CURRENT_IPv4";
+echo "New     IPv4 Address:   $NEW_IPv4";
+echo "Present IPv6 Address:   $CURRENT_IPv6";
+echo "New     IPv6 Address:   $NEW_IPv6";
 sleep 2;
 echo "----------------------------------------";
-echo "Record to Modify:";
-echo "[$IPv4_RECORD_ID] ⭢ $IPv4_RECORD_TYPE $NEW_IPv4 $IPv4_DOMAIN_NAME ttl:$IPv4_TTL CDN Proxy:$IPv4_CDN_PROXY";
-echo "[$IPv6_RECORD_ID] ⭢ $IPv6_RECORD_TYPE $NEW_IPv6 $IPv6_DOMAIN_NAME ttl:$IPv6_TTL CDN Proxy:$IPv6_CDN_PROXY";
+echo "Record to be Modify:\n";
+echo "[$IPv4_RECORD_ID]"
+echo "$IPv4_RECORD_TYPE $IPv4_DOMAIN_NAME ttl:$IPv4_TTL CDN-Proxy:$IPv4_CDN_PROXY";
+echo "$CURRENT_IPv4 ⭢ $NEW_IPv4\n"
+echo "[$IPv6_RECORD_ID]"
+echo "$IPv6_RECORD_TYPE $IPv6_DOMAIN_NAME ttl:$IPv6_TTL CDN-Proxy:$IPv6_CDN_PROXY";
+echo "$CURRENT_IPv6 ⭢ $NEW_IPv6"
 echo "========================================";
 echo "Sending Request...";
 sleep 2;
-if [ "$NEW_IPv4" = "$CURRENT_IP" ]
+if [ "$NEW_IPv4" = "$CURRENT_IPv4" ]
 then
     echo "No Change in IP Adddress, exit."
 else
@@ -64,7 +74,8 @@ else
     -H "X-Auth-Key: $X_AUTH_KEY" \
     -H "Content-Type: application/json" \
     --data '{"type":"'$IPv6_RECORD_TYPE'","name":"'$IPv6_DOMAIN_NAME'","content":"'$NEW_IPv6'","ttl":'$IPv6_TTL',"proxied":'$IPv6_CDN_PROXY'}' > /dev/null;
-    echo $NEW_IPv4 > $CURRENT_IP_PATH;
+    echo $NEW_IPv4 > $CURRENT_IPv4_PATH;
+    echo $NEW_IPv6 > $CURRENT_IPv6_PATH;
     echo "Update successful.";
     if [ "$SEND_MAIL" = "true" ]
     then
